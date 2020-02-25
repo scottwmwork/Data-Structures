@@ -11,7 +11,8 @@ class LRUCache:
     def __init__(self, limit=10):
         self.max_nodes = limit
         self.current = None
-        self.dll
+        self.dll = DoublyLinkedLists()
+        self.storage = {}
 
     """
     Retrieves the value associated with the given key. Also
