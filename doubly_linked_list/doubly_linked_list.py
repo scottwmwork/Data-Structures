@@ -53,35 +53,47 @@ class DoublyLinkedList:
     as the new head of the list. Don't forget to handle 
     the old head node's previous pointer accordingly."""
     def add_to_head(self, value):
+
         self.length += 1
-        new_node = ListNode(value)
-        new_node.next = self.head.next
-        self.head = new_node
+        if not self.head and not self.tail:
+            new_node = ListNode(value)
+            self.head = new_node
+            self.tail = new_node
+        else:
+            self.head.insert_before(value)
+            self.head = self.head.prev
 
     """Removes the List's current head node, making the
     current head's next node the new head of the List.
     Returns the value of the removed Node."""
     def remove_from_head(self):
-        self.length -= 1
-        self.head = self.head.next
+        if self.head == None:
+            return None
+        else:
+            value = self.head.value
+            self.delete(self.head)
+            return value
 
     """Wraps the given value in a ListNode and inserts it 
     as the new tail of the list. Don't forget to handle 
     the old tail node's next pointer accordingly."""
     def add_to_tail(self, value):
         self.length += 1
-        new_node = ListNode(value)
-        new_node.prev = self.tail
-        self.tail.next = new_node
-        
+        if not self.head and not self.tail:
+            new_node = ListNode(value)
+            self.tail = new_node
+            self.head = new_node
+        else:
+            self.tail.insert_after(value)
+            self.tail = self.tail.next        
 
     """Removes the List's current tail node, making the 
     current tail's previous node the new tail of the List.
     Returns the value of the removed Node."""
     def remove_from_tail(self):
-        self.length -= 1
-        self.tail = self.tail.previous
-        self.tail.next = None
+        value = self.tail.value
+        self.delete(self.tail)
+        return value
 
     """Removes the input node from its current spot in the 
     List and inserts it as the new head node of the List."""
@@ -100,19 +112,22 @@ class DoublyLinkedList:
     def delete(self, node):
 
         if not self.head and not self.tail:
-            print("Error: Attempted to remove node not in list")
+            print("Error: Attempted to delete node not in list")
             return
+
+        elif self.head == self.tail:
+            self.head = None
+            self.tail = None
         elif node == self.head:
             self.head = self.head.next
             node.delete()
         elif node == self.tail:
-            self.tail = self.tail.previous
+            self.tail = self.tail.prev
             node.delete()
-        if self.head == self.tail:
-            self.head == None
-            self.tail == None
         else:
             node.delete()
+
+        self.length -= 1
         
     """Returns the highest value currently in the list"""
     def get_max(self):
@@ -120,16 +135,23 @@ class DoublyLinkedList:
         # Initialize vars
         max = self.head.value
         next_node = self.head.next
-        end_found == False
 
-        # Loops to find 
-        while end_found == False:
-            current_node = next_node
-            if max < current_node.value:
-                max == current_node.value
+        if self.head == None and self.tail == None:
+            print("Error: Attempted to find max value of empty list")
+        elif next_node == None:
+            return max 
+        else:
 
-            # Check if at end of list.
-            if current_node.next == None:
-                end_found = True
-            else:
-                next_node = current_node.next
+            end_found = False
+            while end_found == False:
+                current_node = next_node
+                if max < current_node.value:
+                    max = current_node.value
+
+                # Check if at end of list.
+                if current_node.next == None:
+                    end_found = True
+                else:
+                    next_node = current_node.next
+
+            return max
