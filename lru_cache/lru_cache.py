@@ -79,6 +79,6 @@ class LRUCache:
 # cache.set("item2", "b")
 # print(cache.get("item2"))
 
-dl = DoublyLinkedList()
-dl.add_to_tail(1)
-print(dl.head.value)
+# dl = DoublyLinkedList()
+# dl.add_to_tail(1)
+# print(dl.head.value)
