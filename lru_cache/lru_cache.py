@@ -60,7 +60,7 @@ class LRUCache:
             self.order.remove_from_head() 
             # Resize
             self.size -= 1
-            
+
         # Add to linked list
         self.order.add_to_tail((key, value))
         # print("Problem:", self.order.tail)
@@ -71,10 +71,10 @@ class LRUCache:
 
 
 # Test Code
-cache = LRUCache()
-cache.set("item1", "a")
-cache.set("item2", "b")
-print(cache.get("item2"))
+# cache = LRUCache()
+# cache.set("item1", "a")
+# cache.set("item2", "b")
+# print(cache.get("item2"))
 
 # dl = DoublyLinkedList()
 # dl.add_to_tail(1)
