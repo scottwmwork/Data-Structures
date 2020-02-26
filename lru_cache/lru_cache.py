@@ -14,9 +14,10 @@ class LRUCache:
 
     def __init__(self, limit=10):
         self.max_nodes = limit
-        self.current = 0
-        self.dll = DoublyLinkedList()
+        self.size = 0
         self.storage = {}
+        self.order = DoublyLinkedList()
+        
 
     """
     Retrieves the value associated with the given key. Also
@@ -27,8 +28,12 @@ class LRUCache:
     """
 
     def get(self, key):
-        pass
-
+        if key in self.storage:
+            node = self.storage[key]
+            print(node.value)
+            self.order.move_to_end(node)
+            return node.value[key]
+    
     """
     Adds the given key-value pair to the cache. The newly-
     added pair should be considered the most-recently used
@@ -41,24 +46,39 @@ class LRUCache:
     """
 
     def set(self, key, value):
+        
+        # If cache is not empty
+        if key in self.storage:
+        
+            node = self.storage[key]
+            node.value = (key, value)
+            # move it to end
+            self.order.move_to_end(node)
+            return
+        
+        if self.size == self.max_nodes:
+            # remove oldest entry (head of linked list)
+            del self.storage[self.order.head.value[0]] 
+            # Delete from linked list
+            self.order.remove_from_head() 
+            # Resize
+            self.size -= 1
 
-        # Check to see if max has been reached -
-        # If so, delete tail of linked list & update storage
-        if self.current >= self.max_nodes:
-            self.dll.tail.delete()
-            self.storage.pop(key) #TODO
+        print("Adding node to list ...")
+        # Add to linked list
+        self.order.add_to_tail((key, value))
+        print("Problem:", self.order.tail)
+        # Add to dictionary
+        self.storage[key] = self.order.tail
+        # Increase size
+        self.size += 1
 
-        self.current += 1
-        # create key value variable
-        key_value = {key:value}
-
-        # add to doubly-linked-list
-        self.dll.add_to_head(key_value)
-
-        # add node to dictionary
-        self.storage[key] = self.dll.head
 
 # Test Code
-cache = LRUCache()
-cache.set("item1", "a")
-print(cache.get("item1"))
+# cache = LRUCache()
+# cache.set("item1", "a")
+# print(cache.get("item1"))
+
+dl = DoublyLinkedList()
+dl.add_to_tail(1)
+print(dl.head.value)
