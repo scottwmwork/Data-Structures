@@ -30,9 +30,8 @@ class LRUCache:
     def get(self, key):
         if key in self.storage:
             node = self.storage[key]
-            print(node.value)
             self.order.move_to_end(node)
-            return node.value[key]
+            return node.value[1]
     
     """
     Adds the given key-value pair to the cache. The newly-
@@ -67,7 +66,7 @@ class LRUCache:
         print("Adding node to list ...")
         # Add to linked list
         self.order.add_to_tail((key, value))
-        print("Problem:", self.order.tail)
+        # print("Problem:", self.order.tail)
         # Add to dictionary
         self.storage[key] = self.order.tail
         # Increase size
@@ -77,7 +76,8 @@ class LRUCache:
 # Test Code
 # cache = LRUCache()
 # cache.set("item1", "a")
-# print(cache.get("item1"))
+# cache.set("item2", "b")
+# print(cache.get("item2"))
 
 dl = DoublyLinkedList()
 dl.add_to_tail(1)
