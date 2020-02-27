@@ -17,7 +17,7 @@ class BinarySearchTree:
                 if self.left is None:
                     self.left = BinarySearchTree(value)
                 else:
-                    self.value.insert(value)
+                    self.insert(value)
             elif value > self.value:
                 if self.right is None:
                     self.right = BinarySearchTree(value)
@@ -91,7 +91,18 @@ class BinarySearchTree:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
+        
+        if self is None:
+            return
+
+        # Go Left
+        self.left.in_order_print(node = 'don care')
+        print(self.value)
+        if self.right.right is not None:
+            # Go Right
+            self.right.in_order_print(node = 'don care')
+            
+
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
