@@ -16,11 +16,13 @@ class BinarySearchTree:
             if value < self.value:
                 if self.left is None:
                     self.left = BinarySearchTree(value)
+                    return
                 else:
-                    self.value.insert(value)
-            elif value > self.value:
+                    self.left.insert(value)
+            elif value >= self.value:
                 if self.right is None:
                     self.right = BinarySearchTree(value)
+                    return
                 else:
                     self.right.insert(value)
         else:
@@ -30,17 +32,18 @@ class BinarySearchTree:
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
+
+        if self is None:
+            return False
     
         # If target is equal to node value -> True
         # Else -> Value is not found: return false
         if self.value == target:
             return True
-        else:
-            return False
         
         # If target is greater than node value -> step into right node
         # Else -> Value is not found: Return false
-        if target > self.value:
+        if target >= self.value:
             if self.right:
                 return self.right.contains(target)
             else:
@@ -83,15 +86,36 @@ class BinarySearchTree:
             return
         else:
             cb(self.value)
-            self.left.for_each(cb)
-            self.right.for_each(cb)
+            if self.left:
+                self.left.for_each(cb)
+            if self.right:
+                self.right.for_each(cb)
 
     # DAY 2 Project -----------------------
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
+        # NOTE: parameter "node" is not needed or used
+        if self is None:
+            print("ERROR: Empty Tree")
+            return
+
+        # Go Left
+        if self.left:
+            self.left.in_order_print(node = '')
+
+        # Print main value    
+        print(self.value)
+
+        if self.right:
+            if self.right.right is not None or self.right.left is not None:
+                # Go Right
+                self.right.in_order_print(node = '')
+            else:
+                print(self.right.value)
+            
+
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
@@ -113,3 +137,17 @@ class BinarySearchTree:
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
         pass
+
+
+
+# Test Code! Delete After Finished Testing
+
+# tree = BinarySearchTree(1)
+# tree.insert(8)
+# tree.insert(5)
+# tree.insert(7)
+# tree.insert(6)
+# tree.insert(3)
+# tree.insert(4)
+# tree.insert(2)
+# tree.in_order_print('')
