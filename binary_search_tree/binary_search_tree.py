@@ -17,8 +17,8 @@ class BinarySearchTree:
                 if self.left is None:
                     self.left = BinarySearchTree(value)
                 else:
-                    self.insert(value)
-            elif value > self.value:
+                    self.left.insert(value)
+            elif value >= self.value:
                 if self.right is None:
                     self.right = BinarySearchTree(value)
                 else:
@@ -30,17 +30,18 @@ class BinarySearchTree:
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
+
+        if self is None:
+            return False
     
         # If target is equal to node value -> True
         # Else -> Value is not found: return false
         if self.value == target:
             return True
-        else:
-            return False
         
         # If target is greater than node value -> step into right node
         # Else -> Value is not found: Return false
-        if target > self.value:
+        if target >= self.value:
             if self.right:
                 return self.right.contains(target)
             else:
@@ -96,11 +97,17 @@ class BinarySearchTree:
             return
 
         # Go Left
-        self.left.in_order_print(node = 'don care')
+        if self.left:
+            self.left.in_order_print(node = 'don care')
+
         print(self.value)
-        if self.right.right is not None:
-            # Go Right
-            self.right.in_order_print(node = 'don care')
+
+        if self.right:
+            if self.right.right is not None:
+                # Go Right
+                self.right.in_order_print(node = 'don care')
+            else:
+                print(self.right.value)
             
 
 
@@ -124,3 +131,18 @@ class BinarySearchTree:
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
         pass
+
+
+
+# Test Code! Delete After Finished Testing
+
+tree = BinarySearchTree(4)
+tree.insert(3)
+tree.insert(3)
+tree.insert(2)
+tree.insert(1)
+tree.insert(6)
+tree.insert(8)
+tree.insert(7)
+print(tree.contains(7))
+tree.in_order_print('')
